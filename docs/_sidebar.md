@@ -1,7 +1,2 @@
 - [首页](/)
-- [AI 应用开发是什么](ai/01-what-is-ai-app-dev.md)
-- [新手学习路线图](ai/02-learning-roadmap.md)
-- [大模型与提示词基础](ai/03-llm-and-prompt.md)
-- [RAG 与 Agent 入门](ai/04-rag-and-agent.md)
-- [常见技术栈与工具选择](ai/05-stack-and-tools.md)
-- [从 0 到 1 做一个 AI 小项目](ai/06-build-your-first-project.md)
+- [后端开发者转 AI 应用开发的完整学习路线](ai/fullstack-roadmap-for-ai-projects.md)
