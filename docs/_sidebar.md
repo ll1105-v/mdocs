@@ -1,2 +1,2 @@
 - [首页](/)
-- [后端开发者转 AI 应用开发的完整学习路线](ai/fullstack-roadmap-for-ai-projects.md)
+- [AI应用开发完整学习路线](ai/AI应用开发学习路线.md)
