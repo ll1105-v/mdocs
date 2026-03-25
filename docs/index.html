@@ -2,9 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>AI 应用开发入门</title>
+  <title>技术文档</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="一个用 Docsify 搭建的 AI 应用开发入门个人网站">
+  <meta name="description" content="一个用 Docsify 搭建的技术文档站点">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
@@ -19,22 +19,71 @@
       font-weight: 800;
       text-align: left;
     }
+
+    .sidebar details {
+      margin: 6px 0 6px 14px;
+    }
+
+    .sidebar summary {
+      cursor: pointer;
+      list-style-position: inside;
+      padding-left: 2px;
+    }
+
+    .sidebar summary::-webkit-details-marker {
+      margin-right: 6px;
+    }
+
+    .sidebar details > ul {
+      margin: 6px 0 0 18px;
+    }
   </style>
 </head>
 <body>
   <div id="app"></div>
   <script>
+    function syncSidebarFolders() {
+      const detailsList = document.querySelectorAll('.sidebar details')
+      const currentHash = decodeURIComponent(window.location.hash || '')
+
+      detailsList.forEach((details) => {
+        const summary = details.querySelector('summary')
+        const key = summary ? `sidebar-folder:${summary.textContent.trim()}` : ''
+        const hasActiveLink = !!details.querySelector('a.active')
+        const inAiSection = currentHash.includes('/ai/')
+        const shouldOpen = hasActiveLink || inAiSection || (key && localStorage.getItem(key) === 'open')
+
+        details.open = shouldOpen
+
+        if (key && !details.dataset.bound) {
+          details.addEventListener('toggle', () => {
+            localStorage.setItem(key, details.open ? 'open' : 'closed')
+          })
+          details.dataset.bound = 'true'
+        }
+      })
+    }
+
     window.$docsify = {
-      name: 'AI 应用开发入门',
+      name: '技术文档',
       repo: '',
       loadSidebar: true,
       subMaxLevel: 2,
+      plugins: [
+        function (hook) {
+          hook.doneEach(function () {
+            requestAnimationFrame(syncSidebarFolders)
+          })
+        }
+      ],
       mermaidConfig: {
         startOnLoad: true,
         theme: 'default',
         querySelector: '.mermaid'
       }
     }
+
+    window.addEventListener('load', syncSidebarFolders)
   </script>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs'
